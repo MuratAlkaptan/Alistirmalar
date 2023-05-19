@@ -13,13 +13,14 @@ const conditions = [
 ];
 
 //Hücrelerin içindeki datayı taşıyan değişken
-const cells = document.querySelectorAll("td");
+const cells = document.getElementsByClassName(".td");
+
 
 //Sırası olan oyuncunun işareti
-let player = 'X';
+let player = "X";
 
 //Bu fonksiyon oyunun bitip bitmediğini kontrol eder
-function winCondition(player, conditions){
+function winCondition(conditions){
 
     for(let i=0; i<=conditions; i++){
 
@@ -32,7 +33,7 @@ function winCondition(player, conditions){
             cells[c3] === player){
 
                 //hangi oyuncunun kazandığını belirt
-                if(player === 'X'){
+                if(player == "X"){
                     document.getElementById("prompt").innerHTML = 'Player X has won!'
                 }
                 else{
@@ -47,26 +48,33 @@ function winCondition(player, conditions){
 }
 
 //Tıklandığı zaman hücrenin içine gerekli işareti yazdıracak fonksiyon
-function onCellClick(player){
+function onCellClick(x){
+    
+        if(player == "X"){
 
+            document.getElementById("0").append("X");
+            //Oyuncu tıkladıktan sonra sırayı değiştir
+            player = "O";
+            
+        }
+        else{
+            document.getElementById("0").append("O");
+            //Oyuncu tıkladıktan sonra sırayı değiştir
+            player = "X";
+            
+        }    
     //td'ye data olarak player işaretini yazdır
-    document.getElementById("0").append(player);//player değişkenini yazdıramıyorum ama string yazdırıyor?
+/*    document.getElementById("0").append(player);//player değişkenini yazdıramıyorum ama string yazdırıyor?*/
+
 }
 
 //Oyuncu üzerine tıkladığı zaman gerekli fonksiyonları çalıştır
-document.getElementById("0").addEventListener('click', function(player){//0 kullanmak yerine bütün hücreleri kontrol edecek bir yol?
+for(let whichCell of cells){
+    
+    whichCell.addEventListener('click', function(event){//0 kullanmak yerine bütün hücreleri kontrol edecek bir yol?
    
+    whichCell = event.target.id
+    onCellClick(whichCell);
+    winCondition(conditions);
     
-    onCellClick(player);
-    winCondition(player, conditions);
-    
-    
-    //Oyuncu tıkladıktan sonra sırayı değiştir
-    if(player === 'X'){
-        player = 'O';
-    }
-    else{
-        player = 'X';
-    }
-
-});
+})};
