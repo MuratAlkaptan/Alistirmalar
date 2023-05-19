@@ -13,7 +13,7 @@ const conditions = [
 ];
 
 //Hücrelerin içindeki datayı taşıyan değişken
-const cells = document.getElementsByClassName(".td");
+const cells = document.getElementsByClassName("td");
 
 
 //Sırası olan oyuncunun işareti
@@ -52,13 +52,13 @@ function onCellClick(x){
     
         if(player == "X"){
 
-            document.getElementById("0").append("X");
+            document.getElementById(x.toString()).append("X");
             //Oyuncu tıkladıktan sonra sırayı değiştir
             player = "O";
             
         }
         else{
-            document.getElementById("0").append("O");
+            document.getElementById(x.toString()).append("O");
             //Oyuncu tıkladıktan sonra sırayı değiştir
             player = "X";
             
@@ -69,11 +69,11 @@ function onCellClick(x){
 }
 
 //Oyuncu üzerine tıkladığı zaman gerekli fonksiyonları çalıştır
-for(let whichCell of cells){
+for(let cellId of cells){
     
-    whichCell.addEventListener('click', function(event){//0 kullanmak yerine bütün hücreleri kontrol edecek bir yol?
+    cellId.addEventListener('click', function(event){//0 kullanmak yerine bütün hücreleri kontrol edecek bir yol?
    
-    whichCell = event.target.id
+    let whichCell = event.target.id
     onCellClick(whichCell);
     winCondition(conditions);
     
