@@ -76,6 +76,7 @@ function restart() {
     cells[i].innerHTML= "";
     cells[i].className = "td";
     }
+    gameOver=false;
 
     //oyun sonu promptunu yok etsin
     document.getElementById("prompt").innerHTML = "";
@@ -84,6 +85,13 @@ function restart() {
     player = "X";
     
 }
+
+var x = document.createElement("INPUT");
+x.setAttribute("type", "button");
+x.setAttribute("id", "Restart");
+x.setAttribute("value", "Restart");
+document.body.appendChild(x);
+document.getElementById("Restart").addEventListener('click', restart);
 
 
 function switchPlayer() {
@@ -99,24 +107,14 @@ function onCellClick() {
     if (checkWin()) {
         onWin() 
         //yeniden başlatma tuşu ekle
-        var x = document.createElement("INPUT");
-        x.setAttribute("type", "button");
-        x.setAttribute("id", "Restart");
-        x.setAttribute("value", "Restart");
-        document.body.appendChild(x);
-        document.getElementById("Restart").addEventListener('click', restart);
+
 
     } 
     else if (cells[0].innerHTML!="" && cells[1].innerHTML!="" && cells[2].innerHTML!="" && cells[3].innerHTML!="" && cells[4].innerHTML!="" && cells[5].innerHTML!="" && cells[6].innerHTML!="" && cells[7].innerHTML!="" && cells[8].innerHTML!="" && checkWin()==false) {// beraberlik 
 
         document.getElementById("prompt").innerHTML = 'Game ended in a draw';
         //yeniden başlatma tuşu ekle
-        var x = document.createElement("INPUT");
-        x.setAttribute("type", "button");
-        x.setAttribute("id", "Restart");
-        x.setAttribute("value", "Restart");
-        document.body.appendChild(x);
-        document.getElementById("Restart").addEventListener('click', restart);
+
 
     }
     else {
