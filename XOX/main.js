@@ -17,7 +17,7 @@ const conditions = [
 //Hücrelerin içindeki datayı taşıyan değişken
 const cells = document.querySelectorAll("td");
 
-let bot;
+let botCell;
 let gameMode;
 let XWin = 0;
 let OWin = 0;
@@ -68,7 +68,7 @@ function drawCheck() {
     if (empty == 0) {
         return true;
     }
-    else{
+    else {
         return false;
     }
 }
@@ -107,6 +107,13 @@ function restart() {
     gameMode = "";
 
 }
+function onDraw() {
+
+    document.getElementById("prompt").innerHTML = 'Game ended in a draw';
+
+    //Restart tuşu
+    restartButton();
+}
 
 function onWin() {
     if (player == "X") {
@@ -138,11 +145,13 @@ function playerIsO() {
     gameMode = "playerIsO";
 
     player = "X";
-    let botCell = Math.floor(Math.random() * 9);
+    botCell = Math.floor(Math.random() * 9);
     if (cells[botCell].innerHTML == "") {
         cells[botCell].innerHTML = player;
     }
+    switchPlayer();
 }
+
 function playerIsX() {
 
     twoPlayer()
@@ -189,71 +198,61 @@ function onCellClick() {
 
     if (gameOver || this.innerHTML != "") return;
 
-    if (gameMode == "twoPlayers") {
-
-        this.innerHTML = player;
-    }
-
-    else if (gameMode == "playerIsX") {
-        //Oyuncu X flow
-        player = "X";
-        this.innerHTML = player;
-        if(checkWin()){
-            onWin();
-
-        }
-
-        player = "O";
-        let botCell = Math.floor(Math.random() * 9);
-        if (cells[botCell].innerHTML == "") {
-            cells[botCell].innerHTML = player;
-            if(checkWin()){
-                onWin();
-            }
-        }
-        botTurn++;//bot 4 tane O koyarsa veya oyun biterse fonksiyon çağrılmayacak
-    }
-
-    else if (gameMode == "playerIsO") {
-        //Oyuncu O flowu
-
-        player = "O"
-        this.innerHTML = player;
-        if(checkWin()){
-            onWin();
-        }
-
-        player = "X";
-        let botCell = Math.floor(Math.random() * 9);
-        if (cells[botCell].innerHTML == "") {
-            cells[botCell].innerHTML = player;
-            if(checkWin()){
-                onWin();
-            }
-        }
-        
-        botTurn++;//bot 5 tane X koyarsa veya oyun biterse fonksiyon çağrılmayacak
-    }
-
+    this.innerHTML = player;
 
     if (checkWin()) {
         onWin();
 
-
         //Restart tuşu
-
+        return;
     }
     else if (drawCheck()) {// beraberlik 
 
-        document.getElementById("prompt").innerHTML = 'Game ended in a draw';
-
-        //Restart tuşu
-        restartButton();
-
+        onDraw();
+        return;
 
     }
     else {
         switchPlayer();
+    }
+    if (gameMode == "playerIsX" && gameOver == false) {
+
+        do {
+            botCell = Math.floor(Math.random() * 9);
+        } while (cells[botCell].innerHTML != "")
+        cells[botCell].innerHTML = player;
+
+        if (checkWin()) {
+            onWin();
+        }
+        else if (drawCheck()) {
+            onDraw();
+        }
+        else{
+            switchPlayer();
+        }
+
+    }
+
+    else if (gameMode == "playerIsO" && gameOver == false) {
+        //Oyuncu O flowu
+
+        do {
+            botCell = Math.floor(Math.random() * 9);
+        } while (cells[botCell].innerHTML != "")
+        cells[botCell].innerHTML = player;
+
+        if (checkWin()) {
+            onWin();
+
+        }
+        else if (drawCheck()) {
+            onDraw();
+        }
+        else{
+            switchPlayer();
+        }
+
     }
 
 }
@@ -275,6 +274,5 @@ function onCellClick() {
 
 */
 playerButtons();
-
 
 cells.forEach(cell => cell.addEventListener('click', onCellClick));
