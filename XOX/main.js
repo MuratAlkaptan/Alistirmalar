@@ -12,13 +12,17 @@ const conditions = [
 
 ];
 
+
+
 //Hücrelerin içindeki datayı taşıyan değişken
 const cells = document.querySelectorAll("td");
 
+let bot;
+let gameMode;
 let XWin = 0;
 let OWin = 0;
-document.getElementById("XCounter").innerHTML =XWin;
-document.getElementById("OCounter").innerHTML =OWin;
+document.getElementById("XCounter").innerHTML = XWin;
+document.getElementById("OCounter").innerHTML = OWin;
 
 let gameOver = false;
 //Sırası olan oyuncunun işareti
@@ -42,13 +46,65 @@ function checkWin() {
             gameOver = true;
             return true;
 
-            // //hangi oyuncunun kazandığını belirt
+            //hangi oyuncunun kazandığını belirt
 
 
         }
     }
     return false;
 
+
+}
+
+function drawCheck() {
+
+    let empty = 0;
+
+    for (let i = 0; i < 9; i++) {
+        if (cells[i].innerHTML == "") {
+            empty++
+        }
+    }
+    if (empty == 0) {
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
+function restartButton() {
+
+    var r = document.createElement("INPUT");
+    r.setAttribute("type", "button");
+    r.setAttribute("id", "Restart");
+    r.setAttribute("value", "Restart");
+    document.body.appendChild(r);
+    document.getElementById("Restart").addEventListener('click', restart);
+}
+
+function restart() {
+
+    //restart tuşunu silsin
+    document.getElementById("Restart").remove();
+
+    //table'ı resetlesin
+    //yeşil olan celleri normale döndürsün
+    for (let i = 0; i < 9; i++) {
+        cells[i].innerHTML = "";
+        cells[i].className = "td";
+    }
+    gameOver = false;
+
+    //oyun sonu promptunu yok etsin
+    document.getElementById("prompt").innerHTML = "";
+
+    //player sırasını X e çevirsin
+    player = "X";
+
+    playerButtons();
+
+    gameMode = "";
 
 }
 
@@ -61,59 +117,138 @@ function onWin() {
         document.getElementById("prompt").innerHTML = 'Player O has won!'
         OWin++;
     }
-    document.getElementById("XCounter").innerHTML =XWin;
-    document.getElementById("OCounter").innerHTML =OWin;
-
+    document.getElementById("XCounter").innerHTML = XWin;
+    document.getElementById("OCounter").innerHTML = OWin;
+    restartButton();
 
 }
 
-function restart() {
-    
+function twoPlayer() {
 
-    //table'ı resetlesin
-    //yeşil olan celleri normale döndürsün
-    for(let i =0; i<9; i++){
-    cells[i].innerHTML= "";
-    cells[i].className = "td";
-    }
-    gameOver=false;
+    document.getElementById("playerX").remove();
+    document.getElementById("playerO").remove();
+    document.getElementById("twoPlayers").remove();
+    gameMode = "twoPlayers"
+}
 
-    //oyun sonu promptunu yok etsin
-    document.getElementById("prompt").innerHTML = "";
-    
-    //player sırasını X e çevirsin
+function playerIsO() {
+
+    twoPlayer();
+
+    gameMode = "playerIsO";
+
     player = "X";
-    
+    let botCell = Math.floor(Math.random() * 9);
+    if (cells[botCell].innerHTML == "") {
+        cells[botCell].innerHTML = player;
+    }
 }
+function playerIsX() {
 
-var x = document.createElement("INPUT");
-x.setAttribute("type", "button");
-x.setAttribute("id", "Restart");
-x.setAttribute("value", "Restart");
-document.body.appendChild(x);
-document.getElementById("Restart").addEventListener('click', restart);
+    twoPlayer()
 
+    gameMode = "playerIsX"
+
+
+}
 
 function switchPlayer() {
     player = player == 'X' ? 'O' : 'X'
 }
 
+function playerButtons() {
+
+    var s = document.createElement("INPUT");
+    s.setAttribute("type", "button");
+    s.setAttribute("id", "twoPlayers");
+    s.setAttribute("value", "Two Players");
+    document.body.appendChild(s);
+    document.getElementById("twoPlayers").addEventListener("click", twoPlayer);
+
+    var x = document.createElement("INPUT");
+    x.setAttribute("type", "button");
+    x.setAttribute("id", "playerX");
+    x.setAttribute("value", "player: X");
+    document.body.appendChild(x);
+    document.getElementById("playerX").addEventListener("click", playerIsX);
+
+    var o = document.createElement("INPUT");
+    o.setAttribute("type", "button");
+    o.setAttribute("id", "playerO");
+    o.setAttribute("value", "player: O");
+    document.body.appendChild(o);
+    document.getElementById("playerO").addEventListener("click", playerIsO);
+
+
+
+}
+
+
 //Tıklandığı zaman hücrenin içine gerekli işareti yazdıracak fonksiyon
 function onCellClick() {
 
     if (gameOver || this.innerHTML != "") return;
-    this.innerHTML = player;
+
+    if (gameMode == "twoPlayers") {
+
+        this.innerHTML = player;
+    }
+
+    else if (gameMode == "playerIsX") {
+        //Oyuncu X flow
+        player = "X";
+        this.innerHTML = player;
+        if(checkWin()){
+            onWin();
+
+        }
+
+        player = "O";
+        let botCell = Math.floor(Math.random() * 9);
+        if (cells[botCell].innerHTML == "") {
+            cells[botCell].innerHTML = player;
+            if(checkWin()){
+                onWin();
+            }
+        }
+        botTurn++;//bot 4 tane O koyarsa veya oyun biterse fonksiyon çağrılmayacak
+    }
+
+    else if (gameMode == "playerIsO") {
+        //Oyuncu O flowu
+
+        player = "O"
+        this.innerHTML = player;
+        if(checkWin()){
+            onWin();
+        }
+
+        player = "X";
+        let botCell = Math.floor(Math.random() * 9);
+        if (cells[botCell].innerHTML == "") {
+            cells[botCell].innerHTML = player;
+            if(checkWin()){
+                onWin();
+            }
+        }
+        
+        botTurn++;//bot 5 tane X koyarsa veya oyun biterse fonksiyon çağrılmayacak
+    }
+
 
     if (checkWin()) {
-        onWin() 
-        //yeniden başlatma tuşu ekle
+        onWin();
 
 
-    } 
-    else if (cells[0].innerHTML!="" && cells[1].innerHTML!="" && cells[2].innerHTML!="" && cells[3].innerHTML!="" && cells[4].innerHTML!="" && cells[5].innerHTML!="" && cells[6].innerHTML!="" && cells[7].innerHTML!="" && cells[8].innerHTML!="" && checkWin()==false) {// beraberlik 
+        //Restart tuşu
+
+    }
+    else if (drawCheck()) {// beraberlik 
 
         document.getElementById("prompt").innerHTML = 'Game ended in a draw';
-        //yeniden başlatma tuşu ekle
+
+        //Restart tuşu
+        restartButton();
 
 
     }
@@ -139,6 +274,7 @@ function onCellClick() {
 
 
 */
+playerButtons();
 
 
-cells.forEach(cell => cell.addEventListener('click', onCellClick)); 
+cells.forEach(cell => cell.addEventListener('click', onCellClick));

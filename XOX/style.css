@@ -53,8 +53,30 @@ td:hover{
 }
 #Restart{
   position: absolute;
+  margin-top: 250px;
+  margin-left: 680px;
+  width: 100px;
+  height: 100px;
+}
+#playerX{
+  position: absolute;
   margin-top: 100px;
-  margin-left: 460px;
+  margin-left: 350px;
+  width: 100px;
+  height: 100px;
+
+}
+#playerO{
+  position: absolute;
+  margin-top: 100px;
+  margin-left: 560px;
+  width: 100px;
+  height: 100px;
+}
+#twoPlayers{
+  position: absolute;
+  margin-top: 250px;
+  margin-left: 455px;
   width: 100px;
   height: 100px;
 }
