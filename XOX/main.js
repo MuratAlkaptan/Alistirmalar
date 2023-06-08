@@ -39,9 +39,10 @@ function checkWin() {
             cells[c2].innerHTML == player &&
             cells[c3].innerHTML == player) {
 
-            document.getElementById(c1).className = "connect";
-            document.getElementById(c2).className = "connect";
-            document.getElementById(c3).className = "connect";
+            // TODO: HTML Elementleri, sayfanin en üstünde topla
+            document.getElementById(c1).classList.add("connect");
+            document.getElementById(c2).classList.add("connect");
+            document.getElementById(c3).classList.add("connect");
 
             gameOver = true;
             return true;
@@ -71,29 +72,53 @@ function drawCheck() {
     else {
         return false;
     }
+
+    // return Array.from(cells).every(cell => cell.innerHTML != "");
 }
 
-function restartButton() {
-
+/*function restartButton() {
     var r = document.createElement("INPUT");
     r.setAttribute("type", "button");
     r.setAttribute("id", "Restart");
     r.setAttribute("value", "Restart");
     document.body.appendChild(r);
     document.getElementById("Restart").addEventListener('click', restart);
+}*/
+function reset(){
+
+
+    XWin=0;
+    OWin=0;
+    document.getElementById("OCounter").innerHTML = OWin;
+    document.getElementById("XCounter").innerHTML = XWin;
+    
+    restart();
 }
 
 function restart() {
 
     //restart tuşunu silsin
-    document.getElementById("Restart").remove();
+
+    //kebab-case
+    document.getElementById("Restart").style.visibility="hidden";
+    document.getElementById("reset").style.visibility="hidden";
 
     //table'ı resetlesin
     //yeşil olan celleri normale döndürsün
-    for (let i = 0; i < 9; i++) {
+    for (let i = 0; i < cells.length; i++) {
         cells[i].innerHTML = "";
         cells[i].className = "td";
     }
+
+    // cells.forEach(cell => {
+    //     cell.innerHTML = ""
+    //     cell.className = "td"
+    // }); 
+
+    //TODO:
+    // immutables / mutables 
+    // getters-setters 
+
     gameOver = false;
 
     //oyun sonu promptunu yok etsin
@@ -102,7 +127,7 @@ function restart() {
     //player sırasını X e çevirsin
     player = "X";
 
-    playerButtons();
+    firstStage();
 
     gameMode = "";
 
@@ -112,35 +137,43 @@ function onDraw() {
     document.getElementById("prompt").innerHTML = 'Game ended in a draw';
 
     //Restart tuşu
-    restartButton();
+    document.getElementById("reset").style.visibility="visible";
+    document.getElementById("Restart").style.visibility = "visible";
 }
 
 function onWin() {
     if (player == "X") {
         document.getElementById("prompt").innerHTML = 'Player X has won!'
         XWin++;
+        document.getElementById("XCounter").innerHTML = XWin;
     }
     else {
         document.getElementById("prompt").innerHTML = 'Player O has won!'
         OWin++;
+        document.getElementById("OCounter").innerHTML = OWin;
     }
-    document.getElementById("XCounter").innerHTML = XWin;
-    document.getElementById("OCounter").innerHTML = OWin;
-    restartButton();
-
+    
+    document.getElementById("reset").style.visibility="visible";
+    document.getElementById("Restart").style.visibility = "visible";
 }
 
-function twoPlayer() {
+// TODO: arastir - low coupled / high cohesion
+// TODO: lexical scope
+const updatePrompt = (message) => {
+    document.getElementById("prompt").innerHTML = message;
+}
 
-    document.getElementById("playerX").remove();
-    document.getElementById("playerO").remove();
-    document.getElementById("twoPlayers").remove();
+//const updateScore = (player) => {}
+
+function twoPlayer(){
+
+    secondStage();
     gameMode = "twoPlayers"
 }
 
 function playerIsO() {
 
-    twoPlayer();
+    secondStage();
 
     gameMode = "playerIsO";
 
@@ -154,9 +187,9 @@ function playerIsO() {
 
 function playerIsX() {
 
-    twoPlayer()
+    secondStage();
 
-    gameMode = "playerIsX"
+    gameMode = "playerIsX";
 
 
 }
@@ -165,9 +198,9 @@ function switchPlayer() {
     player = player == 'X' ? 'O' : 'X'
 }
 
-function playerButtons() {
+function firstStage() {
 
-    var s = document.createElement("INPUT");
+    /*var s = document.createElement("INPUT");
     s.setAttribute("type", "button");
     s.setAttribute("id", "twoPlayers");
     s.setAttribute("value", "Two Players");
@@ -186,11 +219,37 @@ function playerButtons() {
     o.setAttribute("id", "playerO");
     o.setAttribute("value", "player: O");
     document.body.appendChild(o);
-    document.getElementById("playerO").addEventListener("click", playerIsO);
+    document.getElementById("playerO").addEventListener("click", playerIsO);*/
 
-
+    cells.forEach(cell=>cell.style.visibility="hidden");
+    document.getElementById("secondPanel").style.visibility = "hidden";
+    document.getElementById("header1").style.visibility = "hidden";
+    document.getElementById("header2").style.visibility = "hidden";
+    document.getElementById("XCounter").style.visibility = "hidden";
+    document.getElementById("OCounter").style.visibility = "hidden";
+    document.getElementById("playerX").style.visibility="visible";
+    document.getElementById("playerO").style.visibility="visible";
+    document.getElementById("twoPlayers").style.visibility="visible";
+    document.getElementById("firstPanel").style.visibility = "visible";
 
 }
+
+function secondStage() {
+    document.getElementById("playerX").style.visibility="hidden";
+    document.getElementById("playerO").style.visibility="hidden";
+    document.getElementById("twoPlayers").style.visibility="hidden";
+    document.getElementById("header1").style.visibility = "visible";
+    document.getElementById("header2").style.visibility = "visible";
+    document.getElementById("XCounter").style.visibility = "visible";
+    document.getElementById("OCounter").style.visibility = "visible";
+    cells.forEach(cell=>{
+        cell.style.visibility = "visible";
+    });
+    document.getElementById("firstPanel").style.visibility = "hidden";
+    document.getElementById("secondPanel").style.visibility = "visible";
+}
+
+
 
 
 //Tıklandığı zaman hücrenin içine gerekli işareti yazdıracak fonksiyon
@@ -217,6 +276,9 @@ function onCellClick() {
     }
     if (gameMode == "playerIsX" && gameOver == false) {
 
+
+        // const emptyCells = Array.from(cells).filter(cell => cell.innerHTML == "")
+
         do {
             botCell = Math.floor(Math.random() * 9);
         } while (cells[botCell].innerHTML != "")
@@ -228,7 +290,7 @@ function onCellClick() {
         else if (drawCheck()) {
             onDraw();
         }
-        else{
+        else {
             switchPlayer();
         }
 
@@ -249,7 +311,7 @@ function onCellClick() {
         else if (drawCheck()) {
             onDraw();
         }
-        else{
+        else {
             switchPlayer();
         }
 
@@ -271,8 +333,31 @@ function onCellClick() {
     Makina, rastgele bos olan kutulara tiklama yapicak. 
 
 
-
 */
-playerButtons();
+
+
+
+/* 
+
+ÖDEVLER 2 ARAYÜZ: 
+
+// ÖGRENILECEKLER 
+
+NodeJS Yükle! 
+Async- await / Javascript Promises 
+Lexical Scope 
+Immutables / Mutables
+Getters / Setters
+High Cohesion / Low Coupled
+CSS Flexbox
+WEB API / REST API, JAVASCRIPT AJAX 
+
+Layout: Bir containerin icerisinde, bütün elementler, sayfanin ortasinda durmali (css flexbox)
+1. Asamada, sadece oyun tipi ve X/O secim buttonlari görünücek. Bastiktan sonra, o div yok olucak
+2. Asama oyun basladiginda, oyun alanini ve score-board göstericek.
+3. Asama, oyun bittiginde  boardin altinda sadece restart buttonu olucak, board ve score görünecek.
+4. Asama, reset butonu ekle, tiklanildigi zaman, 1. asamaya geri dönecek, score boardu sifirlayacak
+*/
+
 
 cells.forEach(cell => cell.addEventListener('click', onCellClick));

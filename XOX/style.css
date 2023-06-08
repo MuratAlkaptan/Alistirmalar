@@ -1,23 +1,24 @@
-
 tr{
 
   height: 100px;
 }
 table, th, td{
-  
+  background-color: rgb(255, 255, 255);
   margin-left: auto;
   margin-right: auto;
   width: 300px;
 }
 
 td{
+  cursor:pointer;
   width:100px;
   text-align:center;
   size: 50px;
-  border: 1px solid black;
+  border: white;
+  border-width:2px;
   border-collapse: collapse;
   font-size: 50px;
-  transition: 1s ease-out;
+  transition: 0.4s ease-in-out;
   opacity: 1;
 }
 td:hover{
@@ -27,56 +28,96 @@ td:hover{
 }
 .connect{
   background-color: greenyellow;
-  transition: 0s ease-in-out;
+  transition: 0s ease-in;
 }
 #header1{
-  font-size: 50px;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-size: 40px;
   float: left;
 }
 #header2{
-  font-size: 50px;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-size: 40px;
   float: right;
 }
 #XCounter{
-  font-size: 100px;
-  float: left;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-size: 70px;
 }
 #OCounter{
-  font-size: 100px;
-  float: right;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-size: 70px;
 }
 #prompt{
-  margin: auto;
-  margin-left: 550px;
+  
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  position: absolute;
+  bottom: 150px;
+  left: 175px;
   width: 500px;
   font-size: 50px;
 }
 #Restart{
+  cursor:pointer;
   position: absolute;
-  margin-top: 250px;
-  margin-left: 680px;
-  width: 100px;
-  height: 100px;
+  bottom: 120px;
+  left: 25%;
+  width: 150px;
+  height: 50px;
+}
+#reset{
+  cursor:pointer;
+  position: absolute;
+  bottom: 120px;
+  left: 45%;
+  width:150px;
+  height:50px;
 }
 #playerX{
-  position: absolute;
-  margin-top: 100px;
-  margin-left: 350px;
-  width: 100px;
-  height: 100px;
+
+  width: 150px;
+  height: 50px;
 
 }
 #playerO{
-  position: absolute;
-  margin-top: 100px;
-  margin-left: 560px;
-  width: 100px;
-  height: 100px;
+  width: 150px;
+  height: 50px;
 }
 #twoPlayers{
-  position: absolute;
-  margin-top: 250px;
-  margin-left: 455px;
-  width: 100px;
-  height: 100px;
+
+  width: 150px;
+  height: 50px;
+}
+.panel1{
+  width: 50%;
+  display: flex;
+  justify-content: space-around;
+  align-items:center;
+  position: relative;
+  left: 25%;
+  background-color: rgb(119, 119, 213);
+}
+.panel1 > div {
+  margin: 17px;
+}
+.hiddenElements{
+  visibility: hidden;
+}
+.panel2{
+  width:800px;
+  height: 600px;
+  display:flex;
+  justify-content:space-around;
+  position: relative;
+  left:25%;
+  background-color:rgb(120, 120, 215);
+}
+.panel2 > div {
+  margin: 17px;
+}
+.playerButton{
+  cursor:pointer;
+}
+.playerButton:active{
+  background-color: rgb(72, 0, 255);
 }

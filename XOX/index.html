@@ -8,15 +8,26 @@
   
   <body>
 
-    
+  <div id="firstPanel" class="panel1">
 
-  <p id="header1">Player X</p>
-  <p id="XCounter"></p>
-  <p id="header2">Player O</p>
-  <p id="OCounter"></p>
+
+  <div><button type="button" class="playerButton" id="twoPlayers" onclick="twoPlayer()">Two Players</button></div>
+  <div><button type="button" class="playerButton" id="playerX" onclick="playerIsX()">player: X</button></div>
+  <div><button type="button" class="playerButton" id="playerO" onclick="playerIsO()">player: O</button></div>
+
+
   
 
-  <div class="grid">
+</div>
+
+
+<div id="secondPanel" class="panel2" style="visibility: hidden">
+
+<p id="header1" style="visibility: hidden">Player X</p>
+<p id="XCounter" style="visibility: hidden"></p>
+
+ 
+<div class="grid" style="visibility: hidden">
   
     <table>
 
@@ -51,10 +62,22 @@
 
     </table>
 
-  </div>  
+  </div>
 
-  <p id="prompt"></p>
-  
+<p id="header2" style="visibility: hidden">Player O</p>
+<p id="OCounter" style="visibility: hidden"></p>  
+
+
+
+<div id=""><p id="prompt"></p></div>
+
+<div><button type="button" class="playerButton" id="Restart" style="visibility: hidden" onclick="restart()">Restart</button></div>
+<div><button type="button" class="playerButton" id="reset" style="visibility: hidden" onclick="reset()">Reset</button></div>
+
+</div>
+
+
+
     <script src="./main.js"></script>
   </body>
 </html>
