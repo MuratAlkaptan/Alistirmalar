@@ -1,0 +1,87 @@
+body{
+    background-image: url("https://res.cloudinary.com/dci1eujqw/image/upload/v1616769558/Codepen/waldemar-brandt-aThdSdgx0YM-unsplash_cnq4sb.jpg");
+    background-size: 100% 100%;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+  }
+.boxContainer{
+    display: flex;
+    background-color: rgb(218, 218, 218);
+    position: absolute;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+    margin:auto;
+    border-radius: 10px;
+    box-shadow: 1px 1px 7px 1px #414141;
+    height: 40%;
+    width: 36%;
+    overflow: hidden;
+}
+.sign{
+    height:100%;
+    width:50%;
+    display: flex;
+    flex-direction:column;
+    align-items: center;
+}
+.Form{
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    align-items: center;
+}
+.header{
+    font-size: 25px;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+.type-box{
+    height: 27px;
+    width: 120%;
+    padding-left: 10px;
+}
+.btn{
+    font-size: 13px;
+    background-color: rgb(0, 56, 153);
+    color: aliceblue;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    height:35px;
+    width:130px;
+    border-radius: 20px;
+    border: none;
+}
+.btn:hover{
+    cursor:pointer;
+}
+.btn:active{
+    background-color: rgb(0, 0, 123);
+}
+#imageDiv{
+    position:absolute;
+    height: 100%;
+    width: 50%;
+    background: url("https://res.cloudinary.com/dci1eujqw/image/upload/v1616769558/Codepen/waldemar-brandt-aThdSdgx0YM-unsplash_cnq4sb.jpg");
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    }
+.rightSlide{
+    animation-name: toSignIn;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+}
+    @keyframes toSignIn{
+        from{margin-left: 0px;}
+        to{margin-left: 50%;}
+    }
+.leftSlide{
+    animation-name: toSignOut;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+    }
+    @keyframes toSignOut{
+        from{margin-left:50%;}
+        to{margin-left: 0;}
+    }
