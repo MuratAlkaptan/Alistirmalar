@@ -37,16 +37,17 @@ body{
     font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 .type-box{
-    height: 27px;
+    height: 35px;
     width: 120%;
     padding-left: 10px;
+    border: none;
 }
 .btn{
     font-size: 13px;
-    background-color: rgb(0, 56, 153);
+    background-image: linear-gradient(to right, rgb(27, 114, 201), rgb(43, 182, 168));
     color: aliceblue;
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    height:35px;
+    height:40px;
     width:130px;
     border-radius: 20px;
     border: none;
