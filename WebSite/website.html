@@ -6,7 +6,7 @@
 </head>
 <link rel="stylesheet" href="./website.css">
   
-    <div class="boxContainer">
+    <div id="boxContainer">
         <div id="imageDiv">
             <button class="btn" id="slider">SIGN IN</button>
         </div>
@@ -14,9 +14,9 @@
         <div class="sign">
             <p class="header">Sign In</p>
             <form class="Form" method="post">
-                <input class="type-box" placeholder="User" required><br>
                 <input class="type-box" type="email" pattern="[^ @]*@[^ @]*" placeholder="E-mail" required><br>
                 <input class="type-box" placeholder="Password" minlength="6"><br>
+                <p id="passwordText">Forgot your password?</p>
                 <input class="btn" type="submit" value="SIGN IN">
             </form>
         </div>

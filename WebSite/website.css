@@ -4,7 +4,7 @@ body{
     background-attachment: fixed;
     background-repeat: no-repeat;
   }
-.boxContainer{
+#boxContainer{
     display: flex;
     background-color: rgb(218, 218, 218);
     position: absolute;
@@ -44,7 +44,7 @@ body{
 }
 .btn{
     font-size: 13px;
-    background-image: linear-gradient(to right, rgb(27, 114, 201), rgb(43, 182, 168));
+    background: linear-gradient(to right, rgb(27, 114, 201), rgb(43, 182, 168));
     color: aliceblue;
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     height:40px;
@@ -56,7 +56,7 @@ body{
     cursor:pointer;
 }
 .btn:active{
-    background-color: rgb(0, 0, 123);
+    background-color: rgb(1, 81, 108);
 }
 #imageDiv{
     position:absolute;
@@ -68,21 +68,66 @@ body{
     justify-content: center;
     align-items: center;
     }
-.rightSlide{
-    animation-name: toSignIn;
-    animation-duration: 1s;
-    animation-fill-mode: forwards;
+#passwordText{
+    text-decoration:underline;
 }
-    @keyframes toSignIn{
-        from{margin-left: 0px;}
-        to{margin-left: 50%;}
+.divStart{
+    animation-name: divStarter;
+    animation-duration: 0s;
+    animation-fill-mode: forwards;
     }
-.leftSlide{
-    animation-name: toSignOut;
+    @keyframes divStarter{
+        from{width:36%;}
+        to{width:18%;}
+    }
+.imageStart{
+    animation-name: imageStarter;
+    animation-duration: 0s;
+    animation-fill-mode: forwards;
+    }
+    @keyframes imageStarter{
+        from{width:50%;}
+        to{width:100%;}
+    }
+.divClose{
+    animation-name: shortLeft;
     animation-duration: 1s;
     animation-fill-mode: forwards;
     }
-    @keyframes toSignOut{
-        from{margin-left:50%;}
-        to{margin-left: 0;}
+    @keyframes shortLeft{
+        from{width:36%;}
+        to{width:18%;}
     }
+.divOpen{
+    animation-name: longLeft;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+    }
+    @keyframes longLeft{
+        from{width:18%;}
+        to{width:36%;}
+    }
+.imageClose{
+    animation-name: imageCloser;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+    }
+    @keyframes imageCloser{
+        from{width: 50%;}
+        to{width:100%;}
+    }
+.imageOpen{
+    animation-name: imageOpener;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+    }
+    @keyframes imageOpener{
+        from{width:100%;}
+        to{width:50%;}
+    }
+.marginRight{
+    right: 0px;
+}
+#passwordText:hover{
+    cursor:pointer;
+}
